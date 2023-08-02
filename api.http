@@ -1,0 +1,9 @@
+###
+POST http://localhost:5000/api/word_game
+content-type: application/json
+
+{
+ longestWord : 8,
+ shortestWord : 'the',
+ sum : 23
+}
