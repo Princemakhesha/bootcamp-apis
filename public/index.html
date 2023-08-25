@@ -1,18 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
-        integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
-<body>
 
-    <h1>word game</h1>
-    
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="//unpkg.com/alpinejs" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="//unpkg.com/alpinejs" defer></script>
+
+</head>
+
+<body>
+  <div class="heading">
+    <img src="img/testingicon.png" width="100" alt="">
+    <h1>Bootcamp APIs</h1>
+  </div>
+  <section class="block">
+    <h1>Word Widgets API</h1>
+    <div x-data="{
+        sentence : '',
+        longestWord : '',
+        shortestWord : '',
+        wordLength : 0,
+        checkSentence() {
+            axios
+            .get(`/api/word_game?sentence=${this.sentence}`)
+            .then((result) => {
+                this.longestWord = result.data.longestWord;
+                this.shortestWord = result.data.shortestWord;
+                this.wordLength = result.data.sum;
+            });
+        }
+    }">
+      <div>
+        <textarea x-model="sentence" name="" id="" cols="30" rows="5"></textarea>
+        <div>
+          <button x-on:click="checkSentence">Check sentence</button>
+        </div>
+      </div>
+
+      <div>
+        <div>
+          Longest Word: <span x-text="longestWord"></span>
+        </div>
+        <div>
+          Shortest Word: <span x-text="shortestWord"></span>
+        </div>
+        <div>
+          Word Length: <span x-text="wordLength"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h1>Total Phone bill API</h1>
+    <div>
+      <span x-text="totalPhoneBill"></span>
+    </div>
+    <div><span></span></div>
+  </section>
+  
+
+  <section class="block">
+    <h1>Enough Airtime API</h1>
+    <div x-data="{
+    projectusage: '',
+    airtime: '',
+    message: '',
+    enoughAirtime(){
+        axios
+        .get(`/api/enoughAirtime?projectusage=${this.projectusage}&airtime=${this.airtime}`)
+        .then((result) => {
+            if(result.data.error){
+                alert(result.data.error);
+            }
+            else{
+                this.message = result.data.total;
+            setTimeout(()=>{
+                this.projectusage = '';
+                this.airtime = '';
+            },10000);
+            }
+        })
+    }
+  }">
+      <div id="projectusage">Enter usage: </div>
+      <input type="text" x-model="projectusage">
+      <div id="airtime">Projected Usage Amount: </div>
+      <input id="number" x-model="airtime">
+      <button x-on:click="enoughAirtime()">Check Usage</button>
+      <br>
+      <span>Available Airtime:</span> <span x-show="message.length > 0" x-text="message"></span>
+    </div>
+    </div>
+  </section>
 </body>
+
 </html>

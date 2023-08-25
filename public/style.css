@@ -1,3 +1,16 @@
 body {
     background-color:aqua;
 }
+
+.block {
+    color: black;
+    flex: 1;
+    border: 1px solid grey;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 1em;
+}
+.heading {
+    display: flex;
+    color: black;
+}
